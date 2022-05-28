@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from lib.parser import parsing_function
 
+from Lib.parser import parsing_function
 
 class TestLineParsersUnit:
     @pytest.fixture
