@@ -1,46 +1,56 @@
 # -*- coding: utf-8 -*-
 import re
-from typing import List, Tuple, Any, Union
 
 
+def read_file(filename):
+    """
+    The function reads the input file into a list
+    :param filename: input file
+    :return: reading
+    """
+    with open(filename, encoding='UTF-8') as f:
+        input_file = f.read().splitlines()
+    return input_file
 
 
-
-def read_input(path: str, mode: str, enc: str) -> str:
-    '''
-    The function that reads the input file.inc and converts it to a string
-    :param path: road to the input file.inc
-    :param mode: reading mode
-    :param enc: encoding
-    :return: string with input text
-    '''
-    with open(path, mode, encoding=enc) as file:
-        text = file.read()
-
-    return text
-
-
-def check_input(text: str) -> bool:
+def check_input(input_file):
     '''
     The function of checking the emptiness of the input file.inc
-    :param text: input text from file.inc
+    :param input_file: input text from file.inc
     :return:availability check
     '''
 
-    if text == "":
+    if input_file == "":
         Availability = False
     else:
-        Availability = True
+        Availability = input_file
     return Availability
 
 
-def cleaning_input(text: str) -> str
+def cleaning_input_file(input_file):
     """
-
-    :param text: 
-    :return: 
+    Cleaning the file from garbage
+    :param input_file:
+    :return:
     """
-    cleaning_comments = re.sub(r"--.+\n", r"\n", text)
-    cleaning_extra_spaces = re.sub(r"\s*\n+", "\n", cleaning_comments)
+    input_file_cleared = []
+    for i in input_file:
+        a = i.split('--')[0]
+        a = re.sub('\t', ' ', a)
+        a = re.sub('/', '', a)
+        a = re.sub("'", '', a)
 
-    return cleaning_extra_spaces
+        input_file_cleared.append(a)
+    return input_file_cleared
+
+def clean_file(input_file_cleared):
+    """
+    :param input_file_cleared:
+    :return: input file without void
+    """
+    input_file_without_void=[]
+    space=[i*' ' for i in range(100)]
+    for i in input_file_cleared:
+        if i!='' and i not in space:
+            input_file_without_void.append(i)
+    return input_file_without_void
