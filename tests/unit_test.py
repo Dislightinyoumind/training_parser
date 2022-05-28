@@ -1,15 +1,15 @@
 import pytest
 
 import numpy as np
-from lib.pre_parser import cleaning_input_file
-from lib.pre_parser import clean_file
-from lib.parser import parsing_function
-from lib.post_parser import frame_creation
+from Lib.pre_parser import cleaning_input_file
+from Lib.pre_parser import clean_file
+from Lib.parser import parsing_function
+from Lib.post_parser import frame_creation
 
 
-class Test_clear_of_rubbish:
+class test_cleaning_input:
     @pytest.fixture
-    def test_first_func(self):
+    def test_cleaning_func(self):
 
         self.input_file = open("input_data/input.inc")
 
@@ -87,14 +87,14 @@ class Test_clear_of_rubbish:
                     '',
                     '',
                     'END']
-    def test_first_func_result(self, test_first_func):
+    def test_cleaning_func_result(self, test_first_func):
 
         assert cleaning_input_file(self.input_file) == self.parsing_result
 
 
-class Test_probels_clearing:
+class test_space_clearing:
     @pytest.fixture
-    def test_sec_func(self):
+    def test_clean_func(self):
 
         self.input_file = cleaning_input_file(open("input_data/input.inc"))
 
@@ -130,14 +130,14 @@ class Test_probels_clearing:
                     'DATES',
                     '01 DEC 2018',
                     'END']
-    def test_sec_func_result(self, test_sec_func):
+    def test_clean_func_result(self, test_sec_func):
 
         assert clean_file(self.input_file) == self.parsing_result
 
 
-class Test_to_normal_view:
+class test_parsing_function:
     @pytest.fixture
-    def test_third_func(self):
+    def test_parsing_func(self):
 
         self.input_file = clean_file(cleaning_input_file(open("input_data/input.inc")))
 
@@ -166,13 +166,13 @@ class Test_to_normal_view:
                 ['DATES', '01 OCT 2018'],
                 ['DATES', '01 NOV 2018'],
                 ['DATES', '01 DEC 2018']]
-    def test_third_func_result(self, test_third_func):
+    def test_parsing_func_result(self, test_third_func):
 
         assert parsing_function(self.input_file) == self.parsing_result
 
-class Test_frame_creation:
+class test_frame_creation:
     @pytest.fixture
-    def test_fourth_func(self):
+    def test_frame_func(self):
 
         self.input_file = parsing_function(clean_file(cleaning_input_file(open("input_data/input.inc"))))
 
@@ -209,7 +209,7 @@ class Test_frame_creation:
              np.nan, np.nan]]
 
 
-    def test_third_func_result(self, test_fourth_func):
+    def test_frame_func_result(self, test_fourth_func):
 
         assert frame_creation(self.input_file).values.tolist() == self.parsing_result
 
